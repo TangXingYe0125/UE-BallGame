@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "EnemyActor.generated.h"
-
+class USphereComponent;
 UCLASS()
 class UE_MINIGAMEV1_API AEnemyActor : public AActor
 {
@@ -27,6 +27,12 @@ public:
 	// Character —p‚Ì StaticMesh : Sphere
 	UPROPERTY(VisibleAnywhere, Category = Character, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UStaticMeshComponent> m_Sphere;
+public:
+	UPROPERTY(VisibleAnywhere, Category = Item)
+	TObjectPtr<USphereComponent> Sphere;
+private:
+	UFUNCTION()
+	void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
 
 //==========================================================================

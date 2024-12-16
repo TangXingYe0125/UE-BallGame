@@ -2,7 +2,8 @@
 
 
 #include "EnemyActor.h"
-
+#include "playerpawn.h"
+#include"Components/SphereComponent.h"
 // Sets default values
 AEnemyActor::AEnemyActor()
 {
@@ -13,14 +14,21 @@ AEnemyActor::AEnemyActor()
 	UStaticMesh* Mesh = LoadObject<UStaticMesh>(NULL, TEXT("/Game/EnemySphere"), NULL, LOAD_None, NULL);
 	m_Sphere->SetStaticMesh(Mesh);
 	m_Sphere->SetupAttachment(RootComponent);
+
+	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
+	Sphere->SetupAttachment(RootComponent);
+
+	// Radius‚ðÝ’è‚·‚é
+	Sphere->SetSphereRadius(50.0f);
+
+	Sphere->OnComponentBeginOverlap.AddDynamic(this, &AItemBase::OnSphereBeginOverlap);
+
 }
 
 // Called when the game starts or when spawned
 void AEnemyActor::BeginPlay()
 {
 	Super::BeginPlay();
-
-
 }
 
 // Called every frame
@@ -38,8 +46,10 @@ void AEnemyActor::Tick(float DeltaTime)
 	pos.X = FMath::Clamp(pos.X, -4000, 4000);
 	pos.Y = FMath::Clamp(pos.Y, -4000, 4000);
 	this->SetActorLocation(pos);
-
+	
 }
+
+
 
 
 
