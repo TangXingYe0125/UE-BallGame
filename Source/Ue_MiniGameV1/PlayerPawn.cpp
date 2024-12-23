@@ -165,6 +165,7 @@ void APlayerPawn::PressedMovAxis(const FInputActionValue& Value)
 	pos.X = FMath::Clamp(pos.X, -4000, 4000);
 	pos.Y = FMath::Clamp(pos.Y, -4000, 4000);
 	this->SetActorLocation(pos);
+
 }
 
 void APlayerPawn::PressedCamAxis(const FInputActionValue& Value)

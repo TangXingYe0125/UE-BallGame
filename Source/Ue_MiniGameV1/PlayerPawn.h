@@ -81,5 +81,4 @@ private:
 
 	// Pressó‘Ô‚ğŠÇ—
 	bool IsPressed = false;
-
 };

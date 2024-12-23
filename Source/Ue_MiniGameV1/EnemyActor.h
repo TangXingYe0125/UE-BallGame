@@ -6,6 +6,28 @@
 #include "GameFramework/Actor.h"
 #include "EnemyActor.generated.h"
 class USphereComponent;
+
+class MyRand
+{
+public:
+
+	static const int MYRAND_MIN = 1;		// 乱数最小値
+	static const int MYRAND_MAX = 100;		// 乱数最大値
+
+	//----------------------------------------------------------------------
+	// メソッド
+
+	MyRand();								// コンストラクタ
+	void initSeed(const unsigned int seed);	// シード値の初期化
+	unsigned int rand();					// 独自乱数
+
+private:
+	//----------------------------------------------------------------------
+	// フィールド
+	unsigned int _mySeed = 0;		// 独自乱数のランダムシード値
+};
+
+
 UCLASS()
 class UE_MINIGAMEV1_API AEnemyActor : public AActor
 {
@@ -30,33 +52,10 @@ public:
 public:
 	UPROPERTY(VisibleAnywhere, Category = Item)
 	TObjectPtr<USphereComponent> Sphere;
-private:
-	UFUNCTION()
-	void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-};
-
-//==========================================================================
-// 独自疑似乱数クラス
-class MyRand
-{
 public:
-	//----------------------------------------------------------------------
-	// 定数
-
-	static const int MYRAND_MIN = 1;		// 乱数最小値
-	static const int MYRAND_MAX = 20;		// 乱数最大値
-
-	//----------------------------------------------------------------------
-	// メソッド
-
-	MyRand();								// コンストラクタ
-	void initSeed(const unsigned int seed);	// シード値の初期化
-	unsigned int rand();					// 独自乱数
-
-private:
-	//----------------------------------------------------------------------
-	// フィールド
-	unsigned int _mySeed = 0;		// 独自乱数のランダムシード値
+	MyRand myrand;
+public:
+	float Distance;
 };
 
 
