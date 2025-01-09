@@ -26,12 +26,22 @@ void MyRand::initSeed(const unsigned int seed)
 }
 
 // “ÆŽ©—”
+
 unsigned int MyRand::rand()
 {
 	unsigned int r = _mySeed * 11111 + 55555;
 	_mySeed = r;
 	r += r / 128;
 	return (r % MYRAND_MAX) + MYRAND_MIN;
+
+}
+
+unsigned int MyRand::randresult()
+{
+	unsigned int r = _mySeed * 11111 + 55555;
+	_mySeed = r;
+	r += r / 128;
+	return (r % 2) + 0;
 }
 
 // Sets default values
@@ -64,21 +74,24 @@ void AEnemyActor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	FVector pos = this->GetActorLocation();
 
-	pos.X += myrand.rand();
-	pos.X -= myrand.rand();
-	pos.Y += myrand.rand();
-	pos.Y -= myrand.rand();
+	timer += DeltaTime;
+	if (timer <= 1.0f)
+	{
+		pos.X = direction == 0 ? pos.X + moveX : pos.X - moveX;
+		pos.Y = direction == 0 ? pos.Y + moveY : pos.Y - moveY;
+	}
+	else
+	{
+		timer = 0;
+		direction = myrand.randresult();
+		direction = myrand.randresult();
+		moveX = myrand.rand();
+		moveY = myrand.rand();
+	}
 
 	pos.X = FMath::Clamp(pos.X, -4000, 4000);
 	pos.Y = FMath::Clamp(pos.Y, -4000, 4000);
 	this->SetActorLocation(pos);	
-
-
-	//float Distance = GetDistanceTo(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
-	//if (Distance <= 50.0f)
-	//{
-	//	this->Destroy();
-	//}
 
 }
 

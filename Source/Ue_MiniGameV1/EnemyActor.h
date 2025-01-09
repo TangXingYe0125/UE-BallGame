@@ -12,7 +12,7 @@ class MyRand
 public:
 
 	static const int MYRAND_MIN = 1;		// 乱数最小値
-	static const int MYRAND_MAX = 100;		// 乱数最大値
+	static const int MYRAND_MAX = 5;		// 乱数最大値
 
 	//----------------------------------------------------------------------
 	// メソッド
@@ -20,7 +20,7 @@ public:
 	MyRand();								// コンストラクタ
 	void initSeed(const unsigned int seed);	// シード値の初期化
 	unsigned int rand();					// 独自乱数
-
+	unsigned int randresult();				
 private:
 	//----------------------------------------------------------------------
 	// フィールド
@@ -56,6 +56,10 @@ public:
 	MyRand myrand;
 public:
 	float Distance;
+	float timer = 0;
+	unsigned int direction = 0;
+	unsigned int moveX = 0;
+	unsigned int moveY = 0;
 };
 
 
