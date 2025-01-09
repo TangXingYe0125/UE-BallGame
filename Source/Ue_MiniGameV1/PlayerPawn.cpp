@@ -25,6 +25,10 @@ APlayerPawn::APlayerPawn()
 	UStaticMesh* Mesh = LoadObject<UStaticMesh>(NULL, TEXT("/Game/PlayerSphere"), NULL, LOAD_None, NULL);
 	m_Sphere->SetStaticMesh(Mesh);
 
+	UMaterial* Material = LoadObject<UMaterial>(nullptr, TEXT("/Engine/BasicShapes/BasicShapeMaterial"));
+	m_Sphere->SetSimulatePhysics(true);
+	m_Sphere->SetCollisionProfileName(TEXT("PhysicsActor"));
+	m_Sphere->BodyInstance.bNotifyRigidBodyCollision = true;
 	// SpringArm ‚ð’Ç‰Á‚·‚é
 	m_SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
 	m_SpringArm->SetupAttachment(RootComponent);
@@ -42,6 +46,7 @@ APlayerPawn::APlayerPawn()
 
 	// Camera‚ÌLag‚ð—LŒø‚É‚·‚é
 	m_SpringArm->bEnableCameraLag = true;
+
 
 	// Camera‚ð’Ç‰Á‚·‚é
 	m_Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
@@ -82,6 +87,7 @@ void APlayerPawn::BeginPlay()
 	SetupInput();
 
 }
+
 
 void APlayerPawn::SetupInput()
 {
@@ -145,7 +151,7 @@ void APlayerPawn::PressedMovAxis(const FInputActionValue& Value)
 	FVector2D v = Value.Get<FVector2D>();
 
 	// Axis Input Value
-	UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("V X:%f Y:%f"), v.X, v.Y), true, true, FColor::Cyan, 10.0f, TEXT("None"));
+	//UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("V X:%f Y:%f"), v.X, v.Y), true, true, FColor::Cyan, 10.0f, TEXT("None"));
 
 	// ƒJƒƒ‰‰ñ“]‚ð”½‰f
 	FMinimalViewInfo MinimalViewInfo;
@@ -157,6 +163,7 @@ void APlayerPawn::PressedMovAxis(const FInputActionValue& Value)
 		FPlane(0, 0, 0, 1));
 	FVector d = { v.X, v.Y, 0.0 };
 	d = ViewRotationMatrix.Rotator().RotateVector(d);
+
 
 	// ˆÚ“®
 	FVector pos = this->GetActorLocation();

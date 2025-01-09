@@ -38,6 +38,7 @@ protected:
 	/** Called for Axis input */
 	void EventAxis(const FInputActionValue& Value);
 
+
 private:
 	// Inputê›íË
 	void SetupInput();

@@ -2,9 +2,9 @@
 
 
 #include "EnemyActor.h"
-#include "PlayerPawn.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include <Kismet/KismetSystemLibrary.h>
 
 
 // •W€ŠÖ”‚Ì‹^——”
@@ -53,11 +53,14 @@ AEnemyActor::AEnemyActor()
 	m_Sphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
 	UStaticMesh* Mesh = LoadObject<UStaticMesh>(NULL, TEXT("/Game/EnemySphere"), NULL, LOAD_None, NULL);
 	m_Sphere->SetStaticMesh(Mesh);
-	m_Sphere->SetupAttachment(RootComponent);
+	/*m_Sphere->SetupAttachment(RootComponent);*/
 
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
-	Sphere->SetupAttachment(RootComponent);
+	Sphere->SetupAttachment(m_Sphere);
+	Sphere->SetSphereRadius(50.0f);
+	m_Sphere->SetupAttachment(RootComponent);
 
+	Sphere->OnComponentBeginOverlap.AddDynamic(this, &AEnemyActor::OnSphereBeginOverlap);
 }
 
 // Called when the game starts or when spawned
@@ -93,4 +96,13 @@ void AEnemyActor::Tick(float DeltaTime)
 	this->SetActorLocation(pos);	
 
 }
+
+void AEnemyActor::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (const APlayerPawn* Player = Cast<APlayerPawn>(OtherActor)) {
+		this->Destroy();
+	}
+}
+
+
 

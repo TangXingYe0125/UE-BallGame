@@ -2,9 +2,11 @@
 
 #pragma once
 
+#include "PlayerPawn.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "EnemyActor.generated.h"
+
 class USphereComponent;
 
 class MyRand
@@ -49,13 +51,15 @@ public:
 	// Character —p‚Ì StaticMesh : Sphere
 	UPROPERTY(VisibleAnywhere, Category = Character, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UStaticMeshComponent> m_Sphere;
-public:
-	UPROPERTY(VisibleAnywhere, Category = Item)
+
+	UPROPERTY(VisibleAnywhere, Category = Character, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USphereComponent> Sphere;
+
+	UFUNCTION()
+	void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 public:
 	MyRand myrand;
-public:
-	float Distance;
 	float timer = 0;
 	unsigned int direction = 0;
 	unsigned int moveX = 1;
