@@ -84,7 +84,6 @@ void AEnemyActor::Tick(float DeltaTime)
 	{
 		timer = 0;
 		direction = myrand.randresult();
-		direction = myrand.randresult();
 		moveX = myrand.rand();
 		moveY = myrand.rand();
 	}
