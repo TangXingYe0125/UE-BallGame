@@ -22,6 +22,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void GetScore();
 
 public:	
 	// Called every frame
@@ -44,6 +45,7 @@ public:
 	unsigned int direction = 0;
 	unsigned int moveX = 1;
 	unsigned int moveY = 1;
+
 };
 
 

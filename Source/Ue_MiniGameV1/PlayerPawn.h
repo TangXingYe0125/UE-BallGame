@@ -28,6 +28,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	int getScore() const { return m_Score; }
+	void AddScore();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -50,8 +53,10 @@ private:
 	// Input Event(Axis) イベントハンドラー関数
 	void PressedMovAxis(const FInputActionValue& Value);
 	void PressedCamAxis(const FInputActionValue& Value);
+	int m_Score = 0;
+	float timer = 60.0f;
 
-private:
+
 	// Character 用の StaticMesh : Sphere
 	UPROPERTY(VisibleAnywhere, Category = Character, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UStaticMeshComponent> m_Sphere;

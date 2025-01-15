@@ -17,7 +17,6 @@ class UE_MINIGAMEV1_API AUe_MiniGameV1GameModeBase : public AGameModeBase
 public:
 	// コンストラクタ
 	AUe_MiniGameV1GameModeBase();
-	int m_Score = 0;
-	int AddScore(const int32 ScoreNumber);
 
+private:
 };

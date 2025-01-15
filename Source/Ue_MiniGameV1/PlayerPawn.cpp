@@ -68,7 +68,14 @@ APlayerPawn::APlayerPawn()
 void APlayerPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("Time: %f"),timer), true, true, FColor::Black, 0.01f, TEXT("None"));
+	timer -= DeltaTime;
+	if (timer <= 0.001f)
+	{
+		UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("GameOver")), true, true, FColor::Black, 10.0f, TEXT("None"));
+		//UE_LOG(LogTemp, Display, TEXT("GameOver"));
+		GetWorld()->GetFirstPlayerController()->ConsoleCommand("QUIT");
+	}
 }
 
 // Called to bind functionality to input
@@ -77,6 +84,14 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
+
+void APlayerPawn::AddScore()
+{
+	m_Score++;
+	UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("score:%d"), m_Score), true, true, FColor::Red, 10.0f, TEXT("None"));
+	UE_LOG(LogTemp, Display, TEXT("My Score:%d"), m_Score);
+}
+
 
 // Called when the game starts or when spawned
 void APlayerPawn::BeginPlay()
@@ -129,7 +144,7 @@ void APlayerPawn::PressedAction()
 	if (!IsPressed)
 	{
 		// Pressed
-		UKismetSystemLibrary::PrintString(this, TEXT("Pressed"), true, true, FColor::Cyan, 10.0f, TEXT("None"));
+		//UKismetSystemLibrary::PrintString(this, TEXT("Pressed"), true, true, FColor::Cyan, 10.0f, TEXT("None"));
 
 		// PressèÛë‘Ç…ê›íË
 		IsPressed = true;
@@ -139,7 +154,7 @@ void APlayerPawn::PressedAction()
 void APlayerPawn::ReleasedAction()
 {
 	// Released
-	UKismetSystemLibrary::PrintString(this, TEXT("Released"), true, true, FColor::Cyan, 10.0f, TEXT("None"));
+	//UKismetSystemLibrary::PrintString(this, TEXT("Released"), true, true, FColor::Cyan, 10.0f, TEXT("None"));
 
 	// PressèÛë‘Çâèú
 	IsPressed = false;
@@ -181,7 +196,7 @@ void APlayerPawn::PressedCamAxis(const FInputActionValue& Value)
 	FVector2D v = Value.Get<FVector2D>();
 
 	// Axis Input Value
-	UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("R X:%f Y:%f"), v.X, v.Y), true, true, FColor::Cyan, 10.0f, TEXT("None"));
+	//UKismetSystemLibrary::PrintString(this, FString::Printf(TEXT("R X:%f Y:%f"), v.X, v.Y), true, true, FColor::Cyan, 10.0f, TEXT("None"));
 
 	// âÒì]
 	FRotator rot = this->GetActorRotation();

@@ -34,6 +34,12 @@ void AEnemyActor::BeginPlay()
 	myrand.initSeed((unsigned int)pos.X+ (unsigned int)pos.Y);
 }
 
+void AEnemyActor::GetScore()
+{
+	APlayerPawn* Player = Cast<APlayerPawn>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	Player->AddScore();
+}
+
 // Called every frame
 void AEnemyActor::Tick(float DeltaTime)
 {
@@ -63,9 +69,11 @@ void AEnemyActor::Tick(float DeltaTime)
 void AEnemyActor::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (const APlayerPawn* Player = Cast<APlayerPawn>(OtherActor)) {
+		this->GetScore();
 		this->Destroy();
 	}
 }
+
 
 
 
