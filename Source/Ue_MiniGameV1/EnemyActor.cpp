@@ -7,43 +7,6 @@
 #include <Kismet/KismetSystemLibrary.h>
 
 
-// 標準関数の疑似乱数
-static unsigned int stdRand()
-{
-	return (rand() % MyRand::MYRAND_MAX) + MyRand::MYRAND_MIN;
-}
-
-// コンストラクタ
-MyRand::MyRand()
-	: _mySeed(0)
-{
-}
-
-// シード値の初期化
-void MyRand::initSeed(const unsigned int seed)
-{
-	_mySeed = seed;
-}
-
-// 独自乱数
-
-unsigned int MyRand::rand()
-{
-	unsigned int r = _mySeed * 11111 + 55555;
-	_mySeed = r;
-	r += r / 128;
-	return (r % MYRAND_MAX) + MYRAND_MIN;
-
-}
-
-unsigned int MyRand::randresult()
-{
-	unsigned int r = _mySeed * 11111 + 55555;
-	_mySeed = r;
-	r += r / 128;
-	return (r % 2) + 0;
-}
-
 // Sets default values
 AEnemyActor::AEnemyActor()
 {
